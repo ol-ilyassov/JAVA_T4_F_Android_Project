@@ -52,6 +52,24 @@ class DataBase
         return $login;
     }
 
+    function select($table, $email)
+    {
+    	$email = $this->prepareData($email);
+    	$this->sql = "select * from " . $table . " where email = '" . $email . "'";
+    	$result = mysqli_query($this->connect, $this->sql);
+    	$row = mysqli_fetch_assoc($result);
+    	if (mysqli_num_rows($result) != 0) {
+            $dbemail = $row['email'];
+            $fname = $row['first_name'];
+            $lname = $row['second_name'];
+            if ($dbemail == $email) {
+                $login = $fname." ".$lname;
+            } else $login = "";
+        } else $login = "";
+
+        return $login;
+    }
+
 }
 
 ?>
